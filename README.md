@@ -7,11 +7,14 @@ Um sistema moderno de gerenciamento de usuários construído com **Next.js 15**,
 - ✅ **Listagem de usuários** com interface moderna
 - ✅ **Exclusão de usuários** com confirmação
 - ✅ **Estatísticas em tempo real** (total de usuários, ativos, inativos)
-- ✅ **Sistema de filtros** (estrutura preparada)
+- ✅ **Sistema de filtros funcionais** por status e role
+- ✅ **ENUMs tipados** (UserRole: Admin, User, Moderator)
+- ✅ **Interface em português** com sistema de tradução
+- ✅ **Badges coloridos** para identificação visual
 - ✅ **Banco de dados SQLite** com Prisma ORM
 - ✅ **Seeding automático** com dados de exemplo
 - ✅ **Componentes reutilizáveis** e bem estruturados
-- ✅ **Tipagem TypeScript** completa
+- ✅ **Tipagem TypeScript** completa com type safety end-to-end
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -65,8 +68,8 @@ npx prisma generate
 # Aplicar as migrações
 npx prisma db push
 
-# Popular com dados de exemplo
-npm run seed
+# Popular com dados de exemplo (ENUMs implementados)
+npx tsx scripts/seed.ts
 ```
 
 ### 4. Execute o projeto
@@ -79,11 +82,11 @@ Acesse [http://localhost:3000](http://localhost:3000) para ver o resultado.
 ## 📋 Scripts Disponíveis
 
 ```bash
-npm run dev          # Executa em modo desenvolvimento
-npm run build        # Cria build de produção
-npm run start        # Executa build de produção
-npm run lint         # Executa linter
-npm run seed         # Popula banco com dados exemplo
+npm run dev              # Executa em modo desenvolvimento
+npm run build            # Cria build de produção
+npm run start            # Executa build de produção
+npm run lint             # Executa linter
+npx tsx scripts/seed.ts  # Popula banco com dados exemplo
 ```
 
 ## 🎯 Próximas Funcionalidades (TODO)
@@ -98,7 +101,13 @@ npm run seed         # Popula banco com dados exemplo
 
 ## 📊 Status do Projeto
 
-🚧 **Em Desenvolvimento** - Funcionalidades básicas implementadas, CRUD completo em progresso.
+🚧 **Em Desenvolvimento** - Funcionalidades básicas implementadas + Sistema de ENUMs funcionais. CRUD completo em progresso.
+
+**Últimas atualizações:**
+- ✅ Sistema de UserRole como ENUM implementado
+- ✅ Interface traduzida para português
+- ✅ Filtros funcionais por status e role
+- ✅ Badges coloridos por tipo de usuário
 
 Veja mais detalhes técnicos no arquivo [PROJETO-RESUMO.md](./PROJETO-RESUMO.md).
 
