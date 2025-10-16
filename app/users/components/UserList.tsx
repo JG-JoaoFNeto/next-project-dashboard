@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { UserSearchParams } from "@/types";
 import { DeleteButton } from "./DeleteButton";
+import { getRoleLabel, getStatusLabel, UserRole } from "@/types/user";
 
 interface UserListProps {
   searchParams: UserSearchParams;
@@ -20,15 +21,24 @@ export default async function UserList({ searchParams }: UserListProps) {
       [UserStatus.INACTIVE]: "bg-red-100 text-red-800",
     };
 
-    const labels = {
-      [UserStatus.ACTIVE]: "Ativo",
-      [UserStatus.PENDING]: "Pendente",
-      [UserStatus.INACTIVE]: "Inativo",
+    return (
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${styles[status]}`}>
+        {getStatusLabel(status)}
+      </span>
+    );
+  };
+
+  // Role badge styles
+  const getRoleBadge = (role: UserRole) => {
+    const styles = {
+      ADMIN: "bg-purple-100 text-purple-800",
+      USER: "bg-blue-100 text-blue-800",
+      MODERATOR: "bg-orange-100 text-orange-800",
     };
 
     return (
-      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${styles[status]}`}>
-        {labels[status]}
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${styles[role]}`}>
+        {getRoleLabel(role)}
       </span>
     );
   };
@@ -111,8 +121,8 @@ export default async function UserList({ searchParams }: UserListProps) {
                   <td className="px-6 py-4 whitespace-nowrap">
                     {getStatusBadge(user.status)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 capitalize">
-                    {user.role}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {getRoleBadge(user.role as UserRole)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {new Date(user.createdAt).toLocaleDateString("pt-BR")}

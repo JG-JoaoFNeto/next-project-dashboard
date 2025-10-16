@@ -1,6 +1,9 @@
 import { db } from "../lib/db-script";
 import { UserStatus } from "@prisma/client";
 
+// Temporary UserRole type until Prisma regenerates
+type UserRole = "ADMIN" | "USER" | "MODERATOR";
+
 async function main() {
   console.log("🌱 Seeding database...");
 
@@ -14,49 +17,49 @@ async function main() {
         name: "João Silva",
         email: "joao@example.com",
         status: UserStatus.ACTIVE,
-        role: "admin",
+        role: "ADMIN" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=joao",
       },
       {
         name: "Maria Santos",
         email: "maria@example.com",
         status: UserStatus.ACTIVE,
-        role: "user",
+        role: "USER" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=maria",
       },
       {
         name: "Pedro Oliveira",
         email: "pedro@example.com",
         status: UserStatus.PENDING,
-        role: "user",
+        role: "USER" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=pedro",
       },
       {
         name: "Ana Costa",
         email: "ana@example.com",
         status: UserStatus.INACTIVE,
-        role: "moderator",
+        role: "MODERATOR" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=ana",
       },
       {
         name: "Carlos Mendes",
         email: "carlos@example.com",
         status: UserStatus.ACTIVE,
-        role: "user",
+        role: "USER" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=carlos",
       },
       {
         name: "Lucia Ferreira",
         email: "lucia@example.com",
         status: UserStatus.ACTIVE,
-        role: "user",
+        role: "USER" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=lucia",
       },
       {
         name: "Roberto Dias",
         email: "roberto@example.com",
         status: UserStatus.PENDING,
-        role: "user",
+        role: "USER" as UserRole,
         avatar: "https://i.pravatar.cc/150?u=roberto",
       },
     ],

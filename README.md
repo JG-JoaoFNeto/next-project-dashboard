@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 Dashboard de Usuários - Next.js App Router
 
-## Getting Started
+Um sistema moderno de gerenciamento de usuários construído com **Next.js 15**, **App Router**, **Prisma ORM** e **TypeScript**.
 
-First, run the development server:
+## 🚀 Funcionalidades Implementadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- ✅ **Listagem de usuários** com interface moderna
+- ✅ **Exclusão de usuários** com confirmação
+- ✅ **Estatísticas em tempo real** (total de usuários, ativos, inativos)
+- ✅ **Sistema de filtros** (estrutura preparada)
+- ✅ **Banco de dados SQLite** com Prisma ORM
+- ✅ **Seeding automático** com dados de exemplo
+- ✅ **Componentes reutilizáveis** e bem estruturados
+- ✅ **Tipagem TypeScript** completa
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Next.js 15** - Framework React com App Router
+- **TypeScript** - Tipagem estática
+- **Prisma ORM** - Object-Relational Mapping
+- **SQLite** - Banco de dados local
+- **Tailwind CSS** - Estilização moderna
+- **Lucide React** - Ícones modernos
+
+## 📁 Estrutura do Projeto
+
+```
+├── app/
+│   ├── users/              # Páginas de usuários
+│   │   ├── [id]/          # Página individual do usuário
+│   │   └── components/    # Componentes específicos
+│   ├── layout.tsx         # Layout principal
+│   └── page.tsx          # Página inicial
+├── lib/
+│   ├── actions/          # Server Actions
+│   ├── db.ts            # Configuração do Prisma
+│   └── db-script.ts     # Scripts do banco
+├── prisma/
+│   ├── schema.prisma    # Schema do banco
+│   └── dev.db          # Banco SQLite
+├── scripts/
+│   └── seed.ts         # Script de seeding
+└── types/
+    └── *.ts           # Definições de tipos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Instalação e Execução
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Clone o repositório
+```bash
+git clone https://github.com/JG-JoaoFNeto/next-project-dashboard.git
+cd next-project-dashboard
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Instale as dependências
+```bash
+npm install
+```
 
-## Learn More
+### 3. Configure o banco de dados
+```bash
+# Gerar o cliente Prisma
+npx prisma generate
 
-To learn more about Next.js, take a look at the following resources:
+# Aplicar as migrações
+npx prisma db push
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Popular com dados de exemplo
+npm run seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Execute o projeto
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+Acesse [http://localhost:3000](http://localhost:3000) para ver o resultado.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📋 Scripts Disponíveis
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev          # Executa em modo desenvolvimento
+npm run build        # Cria build de produção
+npm run start        # Executa build de produção
+npm run lint         # Executa linter
+npm run seed         # Popula banco com dados exemplo
+```
+
+## 🎯 Próximas Funcionalidades (TODO)
+
+- [ ] **Criar usuário** - Formulário de cadastro
+- [ ] **Editar usuário** - Formulário de edição
+- [ ] **Sistema de busca** - Buscar por nome, email, etc.
+- [ ] **Filtros avançados** - Por status, data, etc.
+- [ ] **Paginação** - Para grandes volumes de dados
+- [ ] **Validação de formulários** - Com React Hook Form + Zod
+- [ ] **Upload de avatar** - Imagens de perfil
+
+## 📊 Status do Projeto
+
+🚧 **Em Desenvolvimento** - Funcionalidades básicas implementadas, CRUD completo em progresso.
+
+Veja mais detalhes técnicos no arquivo [PROJETO-RESUMO.md](./PROJETO-RESUMO.md).
+
+## 👨‍💻 Autor
+
+**João Neto** - [GitHub](https://github.com/JG-JoaoFNeto)
+
+---
+
+⭐ Se este projeto foi útil para você, considere dar uma estrela no repositório!

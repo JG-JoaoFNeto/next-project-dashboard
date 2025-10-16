@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { UserStatus } from "@prisma/client";
 
 interface FilterSelectProps {
   name: string;
@@ -10,7 +9,7 @@ interface FilterSelectProps {
   placeholder: string;
 }
 
-export function FilterSelect({ name, value, options, placeholder }: FilterSelectProps) {
+export function FilterSelect({ name, value, options }: FilterSelectProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -32,11 +31,10 @@ export function FilterSelect({ name, value, options, placeholder }: FilterSelect
 
   return (
     <select
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-blue-400"
       value={value}
       onChange={(e) => handleChange(e.target.value)}
     >
-      <option value="">{placeholder}</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}
@@ -81,10 +79,10 @@ export function SearchInput({ defaultValue }: SearchInputProps) {
         name="search"
         placeholder="Buscar por nome ou email..."
         defaultValue={defaultValue}
-        className="w-full pl-10 pr-16 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-full pl-10 pr-16 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-blue-400"
       />
       <svg
-        className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+        className="absolute left-3 top-2.5 h-5 w-5 text-blue-400"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -126,7 +124,7 @@ export function SortToggle({ currentOrder }: SortToggleProps) {
   return (
     <button
       onClick={handleToggle}
-      className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500"
+      className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 text-blue-400"
       title={`Ordenar ${currentOrder === "asc" ? "descendente" : "ascendente"}`}
     >
       {currentOrder === "asc" ? "↑" : "↓"}

@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import type { User, UsersResponse, UserSearchParams } from "@/types";
 import { UserStatus } from "@prisma/client";
+import { UserRole } from "@/types/user";
 
 // Get user by ID
 export async function getUserById(id: string): Promise<User | null> {
@@ -50,9 +51,9 @@ export async function getUsers(
       whereClause.status = status as UserStatus;
     }
 
-    // Role filter
-    if (role) {
-      whereClause.role = { contains: role, mode: "insensitive" };
+    // Role filter - use exact match for ENUMs
+    if (role && role !== "all" && ["ADMIN", "USER", "MODERATOR"].includes(role)) {
+      whereClause.role = role as UserRole;
     }
 
     // Calculate pagination
@@ -108,16 +109,7 @@ export async function getUserStats() {
 }
 
 // Get all available roles (for filters)
-export async function getUserRoles(): Promise<string[]> {
-  try {
-    const roles = await db.user.findMany({
-      select: { role: true },
-      distinct: ["role"],
-    });
-
-    return roles.map((r) => r.role).filter(Boolean);
-  } catch (error) {
-    console.error("Error fetching roles:", error);
-    return [];
-  }
+export async function getUserRoles(): Promise<UserRole[]> {
+  // Return the enum values directly since we now use a controlled enum
+  return ["ADMIN", "USER", "MODERATOR"];
 }

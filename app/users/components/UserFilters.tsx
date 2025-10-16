@@ -1,8 +1,7 @@
-import { getUserRoles } from "@/lib/actions/user-queries";
 import { UserStatus } from "@prisma/client";
 import Link from "next/link";
 import { FilterSelect, SearchInput, SortToggle } from "./FilterComponents";
-import { Suspense } from "react";
+import { ROLE_LABELS, STATUS_LABELS } from "@/types/user";
 
 interface UserFiltersProps {
   searchParams: {
@@ -15,27 +14,28 @@ interface UserFiltersProps {
 }
 
 export default async function UserFilters({ searchParams }: UserFiltersProps) {
-  const roles = await getUserRoles();
-
   const currentSearch = searchParams.search || "";
   const currentStatus = searchParams.status || "all";
-  const currentRole = searchParams.role || "";
+  const currentRole = searchParams.role || "all";
   const currentSortBy = searchParams.sortBy || "createdAt";
   const currentSortOrder = searchParams.sortOrder || "desc";
 
-  // Status options
+  // Status options with Portuguese labels
   const statusOptions = [
     { label: "Todos os Status", value: "all" },
-    { label: "Ativo", value: UserStatus.ACTIVE },
-    { label: "Pendente", value: UserStatus.PENDING },
-    { label: "Inativo", value: UserStatus.INACTIVE },
+    { label: STATUS_LABELS.ACTIVE, value: UserStatus.ACTIVE },
+    { label: STATUS_LABELS.PENDING, value: UserStatus.PENDING },
+    { label: STATUS_LABELS.INACTIVE, value: UserStatus.INACTIVE },
   ];
 
-  // Role options
-  const roleOptions = roles.map((role) => ({
-    label: role.charAt(0).toUpperCase() + role.slice(1),
-    value: role,
-  }));
+  // Role options with Portuguese labels
+  const roleOptions = [
+    { label: "Todas as Funções", value: "all" },
+    ...Object.entries(ROLE_LABELS).map(([key, label]) => ({
+      label,
+      value: key,
+    })),
+  ];
 
   // Sort options
   const sortOptions = [
