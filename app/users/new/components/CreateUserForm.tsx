@@ -4,10 +4,12 @@ import { useState } from "react";
 import { createUserAction } from "@/lib/actions/user-actions";
 import { UserStatus } from "@prisma/client";
 import { ROLE_LABELS, STATUS_LABELS, UserRole } from "@/types/user";
+import { useToast } from "@/app/components/ui/Toast";
 
 export function CreateUserForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { showToast } = useToast();
 
   // Status options with Portuguese labels
   const statusOptions = [
@@ -73,6 +75,7 @@ export function CreateUserForm() {
       
       // If we reach here without a result, the action was successful and redirected
       // The component will unmount due to navigation, so no need to update state
+      showToast("Usuário criado com sucesso!", "success");
     } catch (error) {
       // Only catch real errors, not redirects
       console.error("Error creating user:", error);

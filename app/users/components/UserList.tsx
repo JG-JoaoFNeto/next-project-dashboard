@@ -5,13 +5,14 @@ import Image from "next/image";
 import type { UserSearchParams } from "@/types";
 import { DeleteButton } from "./DeleteButton";
 import { getRoleLabel, getStatusLabel, UserRole } from "@/types/user";
+import { Pagination } from "./Pagination";
 
 interface UserListProps {
   searchParams: UserSearchParams;
 }
 
 export default async function UserList({ searchParams }: UserListProps) {
-  const { users, total, page, totalPages } = await getUsers(searchParams);
+  const { users, total, page, totalPages, limit } = await getUsers(searchParams);
 
   // Status badge styles
   const getStatusBadge = (status: UserStatus) => {
@@ -157,36 +158,12 @@ export default async function UserList({ searchParams }: UserListProps) {
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="bg-white rounded-lg shadow-sm border p-4">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-700">
-              Mostrando {users.length} de {total} usuários
-            </div>
-            <div className="flex space-x-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                const isActive = pageNum === page;
-                const params = new URLSearchParams(searchParams as Record<string, string>);
-                params.set("page", pageNum.toString());
-                
-                return (
-                  <Link
-                    key={pageNum}
-                    href={`/users?${params.toString()}`}
-                    className={`px-3 py-2 text-sm rounded-md ${
-                      isActive
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    {pageNum}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        totalItems={total}
+        itemsPerPage={limit}
+      />
     </div>
   );
 }

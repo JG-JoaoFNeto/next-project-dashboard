@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteUserAction } from "@/lib/actions/user-actions";
+import { useToast } from "@/app/components/ui/Toast";
 
 interface DeleteButtonProps {
   userId: string;
@@ -8,6 +9,8 @@ interface DeleteButtonProps {
 }
 
 export function DeleteButton({ userId, userName }: DeleteButtonProps) {
+  const { showToast } = useToast();
+
   const handleDelete = async () => {
     if (!confirm(`Tem certeza que deseja excluir o usuário "${userName}"?`)) {
       return;
@@ -17,8 +20,9 @@ export function DeleteButton({ userId, userName }: DeleteButtonProps) {
       const formData = new FormData();
       formData.append("id", userId);
       await deleteUserAction(formData);
+      showToast(`Usuário "${userName}" excluído com sucesso!`, "success");
     } catch (error) {
-      alert("Erro ao excluir usuário. Tente novamente.");
+      showToast("Erro ao excluir usuário. Tente novamente.", "error");
       console.error("Delete error:", error);
     }
   };

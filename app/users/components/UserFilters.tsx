@@ -10,6 +10,7 @@ interface UserFiltersProps {
     role?: string;
     sortBy?: string;
     sortOrder?: string;
+    limit?: string;
   };
 }
 
@@ -39,10 +40,10 @@ export default async function UserFilters({ searchParams }: UserFiltersProps) {
 
   // Sort options
   const sortOptions = [
-    { label: "Data de Criação", value: "createdAt" },
+    { label: "Data de criação", value: "createdAt" },
     { label: "Nome", value: "name" },
     { label: "Email", value: "email" },
-    { label: "Última Atualização", value: "updatedAt" },
+    { label: "Última atualização", value: "updatedAt" },
   ];
 
   return (
