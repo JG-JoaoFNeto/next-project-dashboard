@@ -21,13 +21,28 @@ Desenvolver um dashboard de usuários completo usando Next.js 15 com App Router,
 - Funcionalidade DELETE implementada
 - Sistema de seeding com dados exemplo
 
-### **🏗️ Commit Atual** - `26eb415`
+### **🏗️ Commit ENUM** - `26eb415`
 **"feat: implementa UserRole como ENUM com sistema de tradução"**
 - Migração de `role: String` → `role: UserRole` (ENUM)
 - Sistema completo de tradução ENUM → Português
 - Badges coloridos por role na interface
 - Type safety completo end-to-end
 - Scripts de migração e integridade de dados
+
+### **🔧 Commit Docs** - `ab8a5d6`
+**"docs: atualiza documentação com estado atual do projeto"**
+- Documentação sincronizada com implementações
+- Histórico de evolução v1.0 → v2.0 detalhado
+- Status realista: 75% completo
+- Roadmap priorizado para próximas entregas
+
+### **🐛 Sessão de Bug Fixes** - **(Em Desenvolvimento)**
+**"fix: resolve problemas críticos de UX e type safety"**
+- **Type Safety**: Corrigido erros UserRole nas Server Actions
+- **SQLite Compatibility**: Removido `mode: "insensitive"` incompatível
+- **UX Filters**: Campo de busca resetado visualmente + botão "Limpar" melhorado
+- **Helper Functions**: `parseUserRole()` para conversão segura
+- **Code Quality**: Validação robusta e error handling aprimorado
 
 ---
 
@@ -164,21 +179,23 @@ next-project-dashboard/
     └── schema.prisma                # Schema do banco (v2.0 com ENUMs)
 ```
 
-### **6. Server Actions Implementadas** ✅ **FUNCIONAIS**
+### **6. Server Actions Implementadas** ✅ **FUNCIONAIS + CORRIGIDAS**
 ```typescript
 // CRUD completo implementado com ENUMs
 - createUser()       # Criar usuário com UserRole ENUM
 - updateUser()       # Atualizar usuário com validação
 - deleteUser()       # Excluir usuário (FUNCIONAL)
 - deleteUserAction() # Form action para exclusão (ATIVO)
-- getUsers()         # Query com filtros por ENUM
+- getUsers()         # Query com filtros por ENUM (SQLite compatível)
+- parseUserRole()    # 🆕 Helper para conversão segura string → UserRole
 ```
 
 **🎯 Melhorias de Backend:**
 - ✅ **Queries otimizadas** para ENUMs (`equals` vs `contains`)
-- ✅ **Type safety** nas Server Actions
+- ✅ **Type safety** nas Server Actions com helper functions 🆕
 - ✅ **Error handling** robusto
 - ✅ **Validação automática** de ENUMs pelo Prisma
+- ✅ **SQLite compatibility** - busca sem `mode: "insensitive"` 🆕
 
 ### **7. Server Components Criados** ✅ **ATUALIZADOS**
 - **UserStats**: Estatísticas em tempo real (total, ativos, pendentes, inativos)
@@ -186,10 +203,11 @@ next-project-dashboard/
 - **UserFilters**: Sistema de filtros com ENUMs funcionais 🆕
 - **Páginas com Suspense**: Loading states otimizados
 
-### **8. Client Components para Interatividade** ✅ **EVOLUÍDOS**
-- **SearchInput**: Busca por nome/email
-- **FilterComponents**: Filtros dropdown com labels em português 🆕
+### **8. Client Components para Interatividade** ✅ **REFINADOS**
+- **SearchInput**: Busca por nome/email com reset visual correto 🆕
+- **FilterComponents**: Filtros dropdown com labels em português
 - **DeleteButton**: Confirmação de exclusão (FUNCIONAL)
+- **Botão "Limpar filtros"**: Sempre visível com estados visuais 🆕
 
 ### **9. Recursos Avançados Implementados** ✅ **FUNCIONAIS**
 - **Filtros via Query Params**: `?search=joão&status=ACTIVE&role=ADMIN` 🆕
@@ -243,9 +261,16 @@ next-project-dashboard/
 ✅ **Loading states** otimizados  
 ✅ **Sistema de ENUMs** com integridade de dados 🆕  
 
+### **🐛 Bugs Corrigidos (Sessão Atual):**
+✅ **Erro de tipagem UserRole** - Type safety nas Server Actions corrigido  
+✅ **Busca SQLite incompatível** - Removido `mode: "insensitive"` incompatível  
+✅ **Reset de filtros** - Campo de busca agora reseta visualmente  
+✅ **Botão "Limpar filtros"** - Sempre visível com estados ativo/desabilitado  
+
 ### **❌ Funcionalidades Ainda Pendentes:**
 ❌ **Criação de usuários** - formulário não implementado  
 ❌ **Edição de usuários** - formulário não implementado  
+❌ **Busca case-insensitive** - limitação do SQLite a resolver  
 ❌ **Paginação** - estrutura preparada, não ativada  
 ❌ **Ordenação** - interface não implementada  
 
@@ -257,6 +282,7 @@ next-project-dashboard/
 ✅ **Performance otimizada** com ENUMs  
 ✅ **SEO-friendly**  
 ✅ **Sistema de tradução** centralizado 🆕  
+✅ **Validação segura** de ENUMs nas Server Actions 🆕  
 
 ---
 
@@ -374,18 +400,20 @@ npx tsx scripts/seed.ts  # Popular banco com dados (ATUALIZADO)
 
 ## 📊 **Status Atual do Projeto**
 
-**🎯 Progresso: ~75% concluído** - Base arquitetural sólida + Sistema de ENUMs implementado
+**🎯 Progresso: ~78% concluído** - Base arquitetural sólida + Bugs críticos resolvidos
 
 ### **✅ Implementado e Funcional:**
 - ✅ **Arquitetura Next.js 15** com App Router
-- ✅ **Sistema de ENUMs** com type safety completo
+- ✅ **Sistema de ENUMs** com type safety completo e validação segura 🆕
 - ✅ **Interface traduzida** para português
 - ✅ **CRUD parcial** - Read + Delete funcionais
-- ✅ **Filtros dinâmicos** por status e role
+- ✅ **Filtros dinâmicos** por status e role (SQLite compatível) 🆕
 - ✅ **Badges visuais** com sistema de cores
+- ✅ **UX refinada** - reset de filtros e estados visuais 🆕
 
-### **🚧 Em Desenvolvimento (25% restante):**
-- 🔄 **Formulários CRUD** - Create e Update
+### **🚧 Em Desenvolvimento (22% restante):**
+- 🔄 **Formulários CRUD** - Create e Update (próxima prioridade)
+- 🔄 **Busca case-insensitive** - solução para SQLite
 - 🔄 **Paginação ativa** - estrutura pronta
 - 🔄 **Hooks customizados** - abstração de lógica
 - 🔄 **Deploy final** - configuração para produção

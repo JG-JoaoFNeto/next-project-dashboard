@@ -98,17 +98,27 @@ export default async function UserFilters({ searchParams }: UserFiltersProps) {
         </div>
       </div>
 
-      {/* Clear Filters */}
-      {(currentSearch || currentStatus !== "all" || currentRole) && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
+      {/* Clear Filters - Always visible */}
+      <div className="mt-4 pt-4 border-t border-gray-200">
+        {(currentSearch || currentStatus !== "all" || currentRole !== "all") ? (
           <Link
             href="/users"
-            className="text-sm text-gray-500 hover:text-gray-700"
+            className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors"
           >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
             Limpar filtros
           </Link>
-        </div>
-      )}
+        ) : (
+          <span className="text-sm text-gray-400 flex items-center gap-1 cursor-not-allowed">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            Limpar filtros
+          </span>
+        )}
+      </div>
     </div>
   );
 }

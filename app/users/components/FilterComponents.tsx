@@ -75,6 +75,7 @@ export function SearchInput({ defaultValue }: SearchInputProps) {
   return (
     <form onSubmit={handleSubmit} className="relative flex-1 max-w-md">
       <input
+        key={defaultValue} // Force re-render when defaultValue changes
         type="text"
         name="search"
         placeholder="Buscar por nome ou email..."

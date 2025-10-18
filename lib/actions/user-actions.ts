@@ -5,6 +5,19 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { ActionResult, CreateUserInput, UpdateUserInput } from "@/types";
 import { UserStatus } from "@prisma/client";
+import type { UserRole } from "@/types/user";
+
+// Helper function to safely convert string to UserRole
+function parseUserRole(value: string | null): UserRole {
+  if (!value) return "USER";
+  
+  const upperValue = value.toUpperCase() as UserRole;
+  if (["ADMIN", "USER", "MODERATOR"].includes(upperValue)) {
+    return upperValue;
+  }
+  
+  return "USER"; // default fallback
+}
 
 // Create new user
 export async function createUser(
@@ -35,7 +48,7 @@ export async function createUser(
         name: input.name.trim(),
         email: input.email.trim().toLowerCase(),
         status: input.status || UserStatus.ACTIVE,
-        role: input.role || "user",
+        role: input.role || "USER",
         avatar: input.avatar,
       },
     });
@@ -139,7 +152,7 @@ export async function createUserAction(formData: FormData) {
     name: formData.get("name") as string,
     email: formData.get("email") as string,
     status: (formData.get("status") as UserStatus) || UserStatus.ACTIVE,
-    role: (formData.get("role") as string) || "user",
+    role: parseUserRole(formData.get("role") as string),
     avatar: formData.get("avatar") as string,
   };
 
@@ -160,7 +173,7 @@ export async function updateUserAction(formData: FormData) {
     name: formData.get("name") as string,
     email: formData.get("email") as string,
     status: formData.get("status") as UserStatus,
-    role: formData.get("role") as string,
+    role: parseUserRole(formData.get("role") as string),
     avatar: formData.get("avatar") as string,
   };
 

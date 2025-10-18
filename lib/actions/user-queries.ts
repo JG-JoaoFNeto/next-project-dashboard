@@ -23,26 +23,32 @@ export async function getUsers(
   searchParams: UserSearchParams = {}
 ): Promise<UsersResponse> {
   try {
-    // Await searchParams for Next.js 15+
-    const awaitedParams = await searchParams;
-    
-    // Parse and validate parameters
-    const search = awaitedParams.search || "";
-    const status = awaitedParams.status || "all";
-    const role = awaitedParams.role || "";
-    const page = parseInt(awaitedParams.page || "1", 10);
-    const limit = parseInt(awaitedParams.limit || "10", 10);
-    const sortBy = awaitedParams.sortBy || "createdAt";
-    const sortOrder = awaitedParams.sortOrder || "desc";
+    // Parse and validate parameters (no await needed)
+    const search = searchParams.search || "";
+    const status = searchParams.status || "all";
+    const role = searchParams.role || "";
+    const page = parseInt(searchParams.page || "1", 10);
+    const limit = parseInt(searchParams.limit || "10", 10);
+    const sortBy = searchParams.sortBy || "createdAt";
+    const sortOrder = searchParams.sortOrder || "desc";
 
     // Build where clause
     const whereClause: Record<string, unknown> = {};
 
-    // Search filter (name or email)
-    if (search) {
+    // Search filter (name or email) - SQLite case-insensitive using LIKE
+    if (search && search.trim() !== "") {
+      const searchTerm = search.trim();
       whereClause.OR = [
-        { name: { contains: search, mode: "insensitive" } },
-        { email: { contains: search, mode: "insensitive" } },
+        { 
+          name: { 
+            contains: searchTerm
+          } 
+        },
+        { 
+          email: { 
+            contains: searchTerm
+          } 
+        },
       ];
     }
 
