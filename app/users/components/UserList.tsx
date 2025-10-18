@@ -113,7 +113,12 @@ export default async function UserList({ searchParams }: UserListProps) {
                         )}
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                        <Link 
+                          href={`/users/${user.id}`}
+                          className="text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                        >
+                          {user.name}
+                        </Link>
                         <div className="text-sm text-gray-500">{user.email}</div>
                       </div>
                     </div>

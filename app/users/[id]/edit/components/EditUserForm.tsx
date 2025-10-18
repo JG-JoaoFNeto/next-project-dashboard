@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { createUserAction } from "@/lib/actions/user-actions";
+import { updateUserAction } from "@/lib/actions/user-actions";
 import { UserStatus } from "@prisma/client";
 import { ROLE_LABELS, STATUS_LABELS, UserRole } from "@/types/user";
+import type { User } from "@/types";
 
-export function CreateUserForm() {
+interface EditUserFormProps {
+  user: User;
+}
+
+export default function EditUserForm({ user }: EditUserFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -28,6 +33,9 @@ export function CreateUserForm() {
     setErrors({});
 
     const formData = new FormData(e.currentTarget);
+    
+    // Add user ID to form data
+    formData.append("id", user.id);
     
     // Client-side validation
     const name = formData.get("name") as string;
@@ -52,7 +60,7 @@ export function CreateUserForm() {
     }
 
     try {
-      const result = await createUserAction(formData);
+      const result = await updateUserAction(formData);
       
       // If result exists, it means there was an error
       // Success cases will redirect and won't return anything
@@ -61,9 +69,9 @@ export function CreateUserForm() {
         
         // Handle different error types with user-friendly messages
         if (result.errorType === "duplicate_email") {
-          newErrors.email = "Este email já está cadastrado. Por favor, use outro email.";
+          newErrors.email = "Este email já está sendo usado por outro usuário.";
         } else {
-          newErrors.general = result.error || "Erro ao criar usuário. Tente novamente.";
+          newErrors.general = result.error || "Erro ao atualizar usuário. Tente novamente.";
         }
         
         setErrors(newErrors);
@@ -75,7 +83,7 @@ export function CreateUserForm() {
       // The component will unmount due to navigation, so no need to update state
     } catch (error) {
       // Only catch real errors, not redirects
-      console.error("Error creating user:", error);
+      console.error("Error updating user:", error);
       
       // Check if this is a redirect response (Next.js throws on redirects)
       if (error && typeof error === 'object' && 'digest' in error) {
@@ -111,7 +119,7 @@ export function CreateUserForm() {
 
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-900 ">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Nome completo *
         </label>
         <div className="mt-1">
@@ -120,6 +128,7 @@ export function CreateUserForm() {
             name="name"
             id="name"
             required
+            defaultValue={user.name}
             className={`text-gray-600 appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
               errors.name 
                 ? "border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500"
@@ -135,7 +144,7 @@ export function CreateUserForm() {
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Email *
         </label>
         <div className="mt-1">
@@ -144,6 +153,7 @@ export function CreateUserForm() {
             name="email"
             id="email"
             required
+            defaultValue={user.email}
             className={`text-gray-600 appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
               errors.email 
                 ? "border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500"
@@ -159,15 +169,15 @@ export function CreateUserForm() {
 
       {/* Status Field */}
       <div>
-        <label htmlFor="status" className="block text-sm font-medium text-gray-900">
+        <label htmlFor="status" className="block text-sm font-medium text-gray-700">
           Status
         </label>
         <div className="mt-1">
           <select
             name="status"
             id="status"
-            defaultValue={UserStatus.ACTIVE}
-            className=" text-gray-600 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            defaultValue={user.status}
+            className="text-gray-600 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
             {statusOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -180,14 +190,14 @@ export function CreateUserForm() {
 
       {/* Role Field */}
       <div>
-        <label htmlFor="role" className="block text-sm font-medium text-gray-900">
+        <label htmlFor="role" className="block text-sm font-medium text-gray-700">
           Função
         </label>
         <div className="mt-1">
           <select
             name="role"
             id="role"
-            defaultValue="USER"
+            defaultValue={user.role}
             className="text-gray-600 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
             {roleOptions.map((option) => (
@@ -201,7 +211,7 @@ export function CreateUserForm() {
 
       {/* Avatar Field */}
       <div>
-        <label htmlFor="avatar" className="block text-sm font-medium text-gray-900">
+        <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">
           Avatar (URL)
         </label>
         <div className="mt-1">
@@ -209,6 +219,7 @@ export function CreateUserForm() {
             type="url"
             name="avatar"
             id="avatar"
+            defaultValue={user.avatar || ""}
             className="text-gray-600 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="https://example.com/avatar.jpg (opcional)"
           />
@@ -223,7 +234,7 @@ export function CreateUserForm() {
         <button
           type="button"
           onClick={() => window.history.back()}
-          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           Cancelar
         </button>
@@ -243,10 +254,10 @@ export function CreateUserForm() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              Criando...
+              Salvando...
             </>
           ) : (
-            "Criar Usuário"
+            "Salvar Alterações"
           )}
         </button>
       </div>
