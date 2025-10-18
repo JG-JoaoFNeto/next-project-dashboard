@@ -161,8 +161,16 @@ export async function createUserAction(formData: FormData) {
   if (result.success) {
     redirect("/users");
   } else {
-    // In a real app, you'd handle this with error states
-    throw new Error(result.error);
+    // Return error object instead of throwing
+    // This prevents 500 errors and allows proper error handling
+    return {
+      success: false,
+      error: result.error,
+      // Classify error types for better UX
+      errorType: result.error?.includes("Email já está em uso") 
+        ? "duplicate_email" 
+        : "validation_error"
+    };
   }
 }
 
