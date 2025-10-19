@@ -71,6 +71,14 @@ Desenvolver um dashboard de usuários completo usando Next.js 15 com App Router,
 - **Feedback Visual**: Substituição de alerts por notificações elegantes
 - **Polish Final**: Remoção de duplicações e otimizações de interface
 
+### **🐛 Commit Fix Toast CRUD** - **(RECENTE)**
+**"fix: corrige toasts que não apareciam em formulários Create/Edit"**
+- **Problema Identificado**: Toasts não apareciam devido ao redirect imediato dos Server Actions
+- **Solução Implementada**: Controle manual de redirect com delay de 1000ms para toast aparecer
+- **Server Actions Ajustadas**: `createUserAction` e `updateUserAction` retornam resultado em vez de redirect
+- **UX Melhorada**: Toasts consistentes em todas as operações CRUD (Create ✅, Edit ✅, Delete ✅)
+- **Feedback Completo**: Sistema de notificações 100% funcional em todos os cenários
+
 ---
 
 ## ✅ **O Que Já Foi Implementado**
@@ -234,9 +242,10 @@ next-project-dashboard/
 - parseUserRole()    # Helper para conversão segura string → UserRole
 ```
 
-**🎯 Melhorias de Backend:**
+### **🎯 Melhorias de Backend:**
 - ✅ **Create Form funcional** com validação client + server 🆕
 - ✅ **Error handling elegante** para email duplicado (401 vs 500) 🆕
+- ✅ **Toast Integration Fix** - Server Actions retornam resultado para controle de toast/redirect 🆕
 - ✅ **Queries otimizadas** para ENUMs (`equals` vs `contains`)
 - ✅ **Type safety** nas Server Actions com helper functions
 - ✅ **Validação automática** de ENUMs pelo Prisma
@@ -466,8 +475,9 @@ npx tsx scripts/seed.ts  # Popular banco com dados (ATUALIZADO)
 ### **🎉 Polimentos Finais Concluídos:**
 - ✅ **Sistema Toast Completo** - 4 tipos, auto-remove, ícones, animações
 - ✅ **Paginação Ativa** - Controle total com scroll inteligente
-- ✅ **Integração CRUD** - Feedback visual em todas as operações
+- ✅ **Integração CRUD Total** - Feedback visual em TODAS as operações (Create, Edit, Delete) ✅
 - ✅ **UX Premium** - Substituição de alerts por notificações elegantes
+- ✅ **Fix Toast Timing** - Controle de redirect para garantir visualização das notificações ✅
 
 ---
 

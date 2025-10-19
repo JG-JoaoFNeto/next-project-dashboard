@@ -64,8 +64,19 @@ export default function EditUserForm({ user }: EditUserFormProps) {
     try {
       const result = await updateUserAction(formData);
       
-      // If result exists, it means there was an error
-      // Success cases will redirect and won't return anything
+      // Handle the result from Server Action
+      if (result && result.success) {
+        // Success case: show toast before redirect
+        showToast("Usuário atualizado com sucesso!", "success");
+        
+        // Small delay to ensure toast appears before redirect
+        setTimeout(() => {
+          window.location.href = '/users';
+        }, 1000);
+        return;
+      }
+      
+      // Handle errors
       if (result && !result.success) {
         const newErrors: Record<string, string> = {};
         
@@ -80,10 +91,6 @@ export default function EditUserForm({ user }: EditUserFormProps) {
         setIsSubmitting(false);
         return;
       }
-      
-      // If we reach here without a result, the action was successful and redirected
-      // The component will unmount due to navigation, so no need to update state
-      showToast("Usuário atualizado com sucesso!", "success");
     } catch (error) {
       // Only catch real errors, not redirects
       console.error("Error updating user:", error);

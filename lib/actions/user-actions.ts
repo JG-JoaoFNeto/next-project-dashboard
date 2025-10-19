@@ -2,7 +2,6 @@
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import type { ActionResult, CreateUserInput, UpdateUserInput } from "@/types";
 import { UserStatus } from "@prisma/client";
 import type { UserRole } from "@/types/user";
@@ -146,7 +145,7 @@ export async function deleteUser(id: string): Promise<ActionResult<void>> {
   }
 }
 
-// Form action for creating user (with redirect)
+// Form action for creating user (returns result for toast handling)
 export async function createUserAction(formData: FormData) {
   const input: CreateUserInput = {
     name: formData.get("name") as string,
@@ -159,7 +158,11 @@ export async function createUserAction(formData: FormData) {
   const result = await createUser(input);
 
   if (result.success) {
-    redirect("/users");
+    // Return success for component to handle redirect and toast
+    return {
+      success: true,
+      data: result.data
+    };
   } else {
     // Return error object instead of throwing
     // This prevents 500 errors and allows proper error handling
@@ -174,7 +177,7 @@ export async function createUserAction(formData: FormData) {
   }
 }
 
-// Form action for updating user (with redirect)
+// Form action for updating user (returns result for toast handling)
 export async function updateUserAction(formData: FormData) {
   const input: UpdateUserInput = {
     id: formData.get("id") as string,
@@ -188,7 +191,11 @@ export async function updateUserAction(formData: FormData) {
   const result = await updateUser(input);
 
   if (result.success) {
-    redirect(`/users/${input.id}`);
+    // Return success for component to handle redirect and toast
+    return {
+      success: true,
+      userId: input.id
+    };
   } else {
     // Return error object instead of throwing
     // This prevents 500 errors and allows proper error handling
