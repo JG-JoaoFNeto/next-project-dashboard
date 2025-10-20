@@ -394,51 +394,51 @@ export function Pagination({ currentPage, totalPages, baseUrl }: Props) {
 
 ```mermaid
 graph TD
-    A[Usuário acessa /users] --> B[page.tsx Server Component]
-    B --> C[Await searchParams]
-    C --> D[UserStats Component]
-    C --> E[UserFilters Component] 
-    C --> F[UserList Component]
-    F --> G[getUsers Server Action]
-    G --> H[Prisma Query]
-    H --> I[SQLite Database]
-    I --> J[Retorna dados]
-    J --> K[Renderiza tabela]
-    K --> L[DeleteButton Client Components]
+    A["Usuário acessa /users"] --> B["page.tsx Server Component"]
+    B --> C["Await searchParams"]
+    C --> D["UserStats Component"]
+    C --> E["UserFilters Component"] 
+    C --> F["UserList Component"]
+    F --> G["getUsers Server Action"]
+    G --> H["Prisma Query"]
+    H --> I["SQLite Database"]
+    I --> J["Retorna dados"]
+    J --> K["Renderiza tabela"]
+    K --> L["DeleteButton Client Components"]
 ```
 
 ### **2. ➕ Criação de Usuário (`/users/new`)**
 
 ```mermaid
 graph TD
-    A[Usuário clica em Novo] --> B[/users/new page]
-    B --> C[CreateUserForm Client Component]
-    C --> D[Usuário preenche formulário]
-    D --> E[Submit → createUserAction]
-    E --> F[Validação no servidor]
-    F --> G{Válido?}
-    G -->|Sim| H[Prisma.user.create]
-    G -->|Não| I[Retorna erro]
-    H --> J[Sucesso]
-    J --> K[Toast de sucesso]
-    K --> L[Redirect para /users]
-    I --> M[Toast de erro]
+    A["Usuário clica em Novo"] --> B["/users/new page"]
+    B --> C["CreateUserForm Client Component"]
+    C --> D["Usuário preenche formulário"]
+    D --> E["Submit → createUserAction"]
+    E --> F["Validação no servidor"]
+    F --> G{"Válido?"}
+    G -->|Sim| H["Prisma.user.create"]
+    G -->|Não| I["Retorna erro"]
+    H --> J["Sucesso"]
+    J --> K["Toast de sucesso"]
+    K --> L["Redirect para /users"]
+    I --> M["Toast de erro"]
 ```
 
 ### **3. 🗑️ Exclusão de Usuário**
 
 ```mermaid
 graph TD
-    A[Usuário clica em Excluir] --> B[DeleteButton setState]
-    B --> C[ConfirmDeleteModal abre]
-    C --> D[Portal renderiza modal]
-    D --> E{Usuário confirma?}
-    E -->|Sim| F[deleteUserAction]
-    E -->|Não| G[Modal fecha]
-    F --> H[Prisma.user.delete]
-    H --> I[Sucesso]
-    I --> J[Toast + Modal fecha]
-    J --> K[Página recarrega]
+    A["Usuário clica em Excluir"] --> B["DeleteButton setState"]
+    B --> C["ConfirmDeleteModal abre"]
+    C --> D["Portal renderiza modal"]
+    D --> E{"Usuário confirma?"}
+    E -->|Sim| F["deleteUserAction"]
+    E -->|Não| G["Modal fecha"]
+    F --> H["Prisma.user.delete"]
+    H --> I["Sucesso"]
+    I --> J["Toast + Modal fecha"]
+    J --> K["Página recarrega"]
 ```
 
 ---
