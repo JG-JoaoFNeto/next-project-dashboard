@@ -6,9 +6,9 @@ export type ActionResult<T = unknown> = {
   errors?: Record<string, string>;
 };
 
-// Component prop types
+// Component prop types for Next.js 15
 export type ServerComponentProps = {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 // Pagination types
