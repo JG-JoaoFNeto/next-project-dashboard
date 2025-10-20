@@ -134,20 +134,39 @@ export default async function UserList({ searchParams }: UserListProps) {
                     {new Date(user.createdAt).toLocaleDateString("pt-BR")}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex justify-end space-x-2">
+                    <div className="flex justify-end items-center space-x-2">
+                      {/* Ver/Detalhes Button - Elegante e Moderno */}
                       <Link
                         href={`/users/${user.id}`}
-                        className="text-blue-600 hover:text-blue-900 px-2 py-1 rounded hover:bg-blue-50"
+                        className="group inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 hover:text-gray-900 hover:border-gray-400 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1 glow-gray"
+                        title="Ver detalhes completos do usuário"
                       >
-                        Ver
+                        <svg className="w-4 h-4 mr-1.5 opacity-70 group-hover:opacity-100 group-hover:scale-110 icon-enhance" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <span className="group-hover:translate-x-0.5 transition-transform duration-200">Ver</span>
                       </Link>
+                      
+                      {/* Editar Button - Sofisticado com Cor de Destaque */}
                       <Link
                         href={`/users/${user.id}/edit`}
-                        className="text-indigo-600 hover:text-indigo-900 px-2 py-1 rounded hover:bg-indigo-50"
+                        className="group inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg shadow-sm hover:bg-blue-100 hover:text-blue-800 hover:border-blue-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 glow-blue"
+                        title="Editar informações do usuário"
                       >
-                        Editar
+                        <svg className="w-4 h-4 mr-1.5 opacity-80 group-hover:opacity-100 group-hover:scale-110 icon-enhance" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        <span className="group-hover:translate-x-0.5 transition-transform duration-200">Editar</span>
                       </Link>
-                      <DeleteButton userId={user.id} userName={user.name} />
+                      
+                      <DeleteButton 
+                        userId={user.id} 
+                        userName={user.name} 
+                        userEmail={user.email}
+                        userStatus={user.status}
+                        userAvatar={user.avatar}
+                      />
                     </div>
                   </td>
                 </tr>
